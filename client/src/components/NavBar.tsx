@@ -10,14 +10,14 @@ const NavBar: FC = () => {
   return (
     <Container width={850} marginTop={10} marginBottom={20}>
       <Wrapper>
-        <h1>Opal Card Manager</h1>
+        <Link to='/'><h1>Opal Card Manager</h1></Link>
         {(user !== undefined) && (
           <nav>
-            <Link to='/'><Button>View Account</Button></Link>
             <Link to='/view-cards'><Button>View Cards</Button></Link>
             <Link to='/link-card'><Button>Link Card</Button></Link>
             <Link to='/record-trip'><Button>Record Trip</Button></Link>
             <Link to='/view-trips'><Button>View Saved Trips</Button></Link>
+            <Link to='/account'><Button>My Account</Button></Link>
           </nav>
         )}
       </Wrapper>
@@ -30,8 +30,10 @@ export default NavBar;
 const Wrapper = styled.div`
   padding: 20px 100px;
 
-  h1 {
+  a, h1 {
+    color: #FFF;
     margin: 0;
+    text-decoration: none;
   }
 
   nav {

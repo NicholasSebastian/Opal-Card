@@ -25,11 +25,11 @@ router.post('/api/link-card', async (req, res) => {
 
     const query = "INSERT INTO cards (cardnumber, cardname, balance, email) VALUES ($1, $2, $3, $4)";
     await db.query(query, [cardnumber, cardname, 0, email]);
-    res.json({ success: true });
+    res.status(200).end();
   }
   catch (err) {
     console.error(err);
-    res.json({ success: false });
+    res.status(500).end();
   }
 });
 

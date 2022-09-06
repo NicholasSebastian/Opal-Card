@@ -24,8 +24,7 @@ const ViewAccount: FC = () => {
         'Content-Type': 'application/json'
       }
     });
-    const { success } = await response.json();
-    if (success) {
+    if (response.ok) {
       setPassword("");
       setMessage({ message: "Account details successfully updated.", positive: true });
     }

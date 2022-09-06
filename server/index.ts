@@ -3,6 +3,7 @@ import cors from 'cors';
 import { Client } from 'pg';
 import accounts from './routes/accounts';
 import cards from './routes/cards';
+import trips from './routes/trips';
 
 // Create a database client object with the credentials.
 const db = new Client({
@@ -27,6 +28,7 @@ app.use(express.json());
 // Paths.
 app.use(accounts);
 app.use(cards);
+app.use(trips);
 
 // Start the server.
 app.listen(8000);

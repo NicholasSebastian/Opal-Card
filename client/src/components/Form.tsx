@@ -25,7 +25,6 @@ const Form = styled.form`
       width: 60%;
       padding: 2px 8px;
       border-color: transparent;
-      -moz-appearance: textfield;
 
       :focus {
         outline: 3px solid #A37B73;
@@ -34,12 +33,6 @@ const Form = styled.form`
       :disabled {
         background-color: #DB7F67;
         color: #000;
-      }
-        
-      ::-webkit-outer-spin-button,
-      ::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
       }
     }
   }

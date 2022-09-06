@@ -9,11 +9,16 @@ router.post('/api/login', async (req, res) => {
   try {
     const query = "SELECT * FROM accounts WHERE email = $1 AND password = $2";
     const response = await db.query(query, [email, password]);
-    res.json({ authenticated: response.rowCount > 0 });
+    if (response.rowCount > 0) {
+      res.status(200).end();
+    }
+    else {
+      res.status(401).end();
+    }
   }
   catch (err) {
     console.error(err);
-    res.json({ authenticated: false });
+    res.status(500).end();
   }
 });
 
@@ -25,11 +30,11 @@ router.post('/api/register', async (req, res) => {
 
     const query = "INSERT INTO accounts (email, password) VALUES ($1, $2)";
     await db.query(query, [email, password]);
-    res.json({ success: true });
+    res.status(200).end();
   }
   catch (err) {
     console.error(err);
-    res.json({ success: false });
+    res.status(500).end();
   }
 });
 
@@ -41,11 +46,11 @@ router.put('/api/modify-account', async (req, res) => {
 
     const query = "UPDATE accounts SET password = $1 WHERE email = $2";
     await db.query(query, [password, email]);
-    res.json({ success: true });
+    res.status(200).end();
   }
   catch (err) {
     console.error(err);
-    res.json({ success: false });
+    res.status(500).end();
   }
 });
 

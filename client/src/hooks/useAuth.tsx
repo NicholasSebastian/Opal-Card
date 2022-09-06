@@ -24,14 +24,13 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         'Content-Type': 'application/json'
       }
     });
-    const { authenticated } = await response.json();
-    if (authenticated) {
+    if (response.ok) {
       setUser(email);
       
       // Stupid and hackable. But fuck it.
       sessionStorage.setItem("email", email);
     }
-    return authenticated as boolean;
+    return response.ok;
   }
 
   function Logout() {
@@ -47,8 +46,7 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         'Content-Type': 'application/json'
       }
     });
-    const data = await response.json();
-    return data.success as boolean;
+    return response.ok;
   }
 
   return (

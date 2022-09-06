@@ -6,23 +6,33 @@ import Message, { IMessage } from "../components/Message";
 import { serverUrl } from "../index";
 import useAuth from "../hooks/useAuth";
 
+function validateNumeric(value: string, callback: (v: string) => void) {
+  const valid = (value.length === 0) || /^\d+$/.test(value);
+  if (valid && value.length < 10) {
+    callback(value);
+  }
+}
+
 const LinkCard: FC = () => {
   const { user } = useAuth()!;
-  const [cardnumber, setCardnumber] = useState<number>();
+  const [cardnumber, setCardnumber] = useState("");
   const [cardname, setCardname] = useState("");
   const [message, setMessage] = useState<IMessage>();
 
   async function HandleCardLink() {
     const response = await fetch(serverUrl + '/api/link-card', {
       method: 'POST',
-      body: JSON.stringify({ cardnumber, cardname, email: user }),
+      body: JSON.stringify({ 
+        cardnumber: parseInt(cardnumber), 
+        cardname, 
+        email: user 
+      }),
       headers: {
         'Content-Type': 'application/json'
       }
     });
-    const { success } = await response.json();
-    if (success) {
-      setCardnumber(undefined);
+    if (response.ok) {
+      setCardnumber("");
       setCardname("");
       setMessage({ message: "Card linked successfully.", positive: true });
     }
@@ -43,9 +53,8 @@ const LinkCard: FC = () => {
         <div>
           <label>Card Number</label>
           <input 
-            type='number'
             value={cardnumber}
-            onChange={e => setCardnumber(parseInt(e.target.value))} />
+            onChange={e => validateNumeric(e.target.value, v => setCardnumber(v))} />
         </div>
         <div>
           <label>Card Name</label>
